@@ -1,28 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
   name: postgres
   labels:
     app: postgres
 spec:
-  replicas: 1
+  ports:
+    - port: 5432
+      targetPort: 5432
   selector:
-    matchLabels:
-      app: postgres
-  template:
-    metadata:
-      labels:
-        app: postgres
-    spec:
-      containers:
-        - name: postgres
-          image: postgres:latest
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: POSTGRES_PASSWORD
-              value: password
-            - name: POSTGRES_DB
-              value: person
-          ports:
-            - containerPort: 5432
-              name: postgres
+    app: postgres
