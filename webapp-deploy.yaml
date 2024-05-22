@@ -29,10 +29,6 @@ spec:
           image: swe304/web-app:latest
           ports:
             - containerPort: 8080
-        - name: postgres
-          image: postgres:latest
-          ports:
-            - containerPort: 8080
           env:
             - name: DB_HOST
               value: postgres
