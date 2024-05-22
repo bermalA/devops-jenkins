@@ -1,9 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
-  labels:
-    app: postgres
+  name: postgres-deploy
 spec:
   replicas: 1
   selector:
@@ -17,12 +15,12 @@ spec:
       containers:
         - name: postgres
           image: postgres:latest
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: POSTGRES_PASSWORD
-              value: password
-            - name: POSTGRES_DB
-              value: person
           ports:
             - containerPort: 5432
-              name: postgres
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "password"
+            - name: POSTGRES_DB
+              value: "person"
