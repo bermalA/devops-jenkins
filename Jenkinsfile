@@ -6,18 +6,23 @@ pipeline {
     }
 
     stages {
+        stage('Checkout Code') {
+            steps {
+                cleanWs()
+                git url: 'https://github.com/bermalA/devops-jenkins.git', branch: 'master'
+            }
+        }
         stage('Build JAR') {
             steps {
-                // Ensure gradlew has execute permissions
+                sh 'pwd && ls -l'
                 sh 'chmod +x ./gradlew'
-                // Run the gradle build script
                 sh './gradlew clean build'
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('<your-dockerhub-username>/new-web-app')
+                    docker.build('swe304/web-app')
                 }
             }
         }
@@ -25,14 +30,14 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'DOCKER_HUB_CREDENTIALS') {
-                        docker.image('<your-dockerhub-username>/new-web-app').push('latest')
+                        docker.image('swe304/web-app').push('latest')
                     }
                 }
             }
         }
         stage('Deploy to Minikube') {
             steps {
-                sh 'minikube kubectl -- set image deployment/webapp webapp=<your-dockerhub-username>/new-web-app:latest --record'
+                sh 'minikube kubectl -- set image deployment/webapp webapp=swe304/web-app:latest --record'
             }
         }
     }
