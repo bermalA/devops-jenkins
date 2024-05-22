@@ -1,0 +1,11 @@
+FROM openjdk:17-alpine
+
+COPY build/libs/Jenkins-0.0.1-SNAPSHOT.jar /app.jar
+
+ENV AWS_ACCESS_KEY_ID="AKIA4TS3WBWNCHCMPCRN"
+ENV AWS_SECRET_ACCESS_KEY="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"
+ENV AWS_REGION="us-east-1"
+
+EXPOSE 8090
+
+ENTRYPOINT ["java","-jar","/app.jar"]
