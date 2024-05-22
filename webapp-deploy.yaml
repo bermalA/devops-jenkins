@@ -8,7 +8,7 @@ spec:
     app: web-app
   ports:
     - port: 8080
-      nodePort: 31000
+      nodePort: 32140
 ---
 apiVersion: apps/v1
 kind: Deployment
