@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: nginx
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: nginx
   ports:
-    - port: 80
-      nodePort: 32141
+    - port: 8080
+      targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,4 +28,4 @@ spec:
         - name: nginx
           image: nginx:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8080
